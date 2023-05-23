@@ -10,6 +10,7 @@ import (
 
 func setup() {
 	var config = Config{}
+	config.Db.Type = "postgres"
 	config.Db.Database = "database"
 	config.Db.Host = "localhost"
 	config.Db.Port = 5432

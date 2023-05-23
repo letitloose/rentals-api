@@ -9,15 +9,17 @@ import (
 	"rentals-api/pkg/config"
 
 	_ "github.com/lib/pq"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
-	db, err := setupDB("config.yml")
+	_, err := setupDB("config.yml")
 	if err != nil {
 		log.Fatalf("failed to init DB: %s", err)
 		os.Exit(1)
 	}
-	log.Printf("successfully initialized DB: %v", db)
+	log.Printf("successfully initialized DB.")
 }
 
 func setupDB(configFile string) (*sql.DB, error) {
@@ -28,7 +30,7 @@ func setupDB(configFile string) (*sql.DB, error) {
 	}
 
 	connStr := config.AssembleConnectString()
-	db, err := sql.Open("postgres", connStr)
+	db, err := sql.Open(config.Db.Type, connStr)
 	if err != nil {
 		return nil, errors.New(fmt.Sprintf("failed to open DB:%s", err))
 	}

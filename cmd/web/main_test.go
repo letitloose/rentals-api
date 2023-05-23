@@ -11,11 +11,7 @@ import (
 
 func setup() {
 	var config = config.Config{}
-	config.Db.Database = "testingwithrentals"
-	config.Db.Host = "172.18.0.2"
-	config.Db.Port = 5432
-	config.Db.Password = "root"
-	config.Db.Username = "root"
+	config.Db.Type = "sqlite3"
 
 	configFile, err := os.Create("config.yml")
 	if err != nil {

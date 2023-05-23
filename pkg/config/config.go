@@ -14,6 +14,7 @@ type Config struct {
 }
 
 type DBConfig struct {
+	Type     string
 	Username string
 	Password string
 	Host     string
@@ -41,19 +42,24 @@ func (config *Config) ReadConfig(fileName string) error {
 	if err != nil {
 		return errors.New(fmt.Sprintf("error unmarshalling config file:%s\n", err))
 	}
-
-	log.Printf("Config Values: %v\n", config)
-
 	return nil
 }
 
 func (config *Config) AssembleConnectString() string {
 
-	connectionString := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable",
-		config.Db.Username,
-		config.Db.Password,
-		config.Db.Host,
-		config.Db.Database)
+	if config.Db.Type == "postgres" {
+		connectionString := fmt.Sprintf("postgres://%s:%s@%s/%s?sslmode=disable",
+			config.Db.Username,
+			config.Db.Password,
+			config.Db.Host,
+			config.Db.Database)
 
-	return connectionString
+		return connectionString
+	}
+
+	if config.Db.Type == "sqlite3" {
+		return ":memory:"
+	}
+
+	return ""
 }
