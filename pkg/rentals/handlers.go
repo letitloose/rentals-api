@@ -9,7 +9,7 @@ import (
 )
 
 func (rentalService *RentalService) AddHandlersToMux(mux *http.ServeMux) {
-	mux.HandleFunc("/users/", rentalService.GetRentalJSON)
+	mux.HandleFunc("/rentals/", rentalService.GetRentalJSON)
 }
 
 func extractID(r *http.Request) (int, error) {
