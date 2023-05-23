@@ -48,15 +48,15 @@ type rentalRepository struct {
 	database *sql.DB
 }
 
-type rentalSearchParams struct {
-	price_min int
-	price_max int
-	limit     int
-	offset    int
-	ids       string
-	near      string
-	sort      string
-	order     string
+type RentalSearchParams struct {
+	PriceMin int
+	PriceMax int
+	Limit    int
+	Offset   int
+	Ids      string
+	Near     string
+	Sort     string
+	Order    string
 }
 
 func NewRentalRepository(database *sql.DB) *rentalRepository {
@@ -77,7 +77,7 @@ func (repository *rentalRepository) getRental(id int) *Rental {
 	return rental
 }
 
-func (repository *rentalRepository) searchRentals(params *rentalSearchParams) ([]*Rental, error) {
+func (repository *rentalRepository) searchRentals(params *RentalSearchParams) ([]*Rental, error) {
 	query, args := buildSearchQuery(params)
 
 	rows, err := repository.database.Query(query, args...)
@@ -128,50 +128,50 @@ func getFloatArrayFromString(intList string) []float64 {
 	return floatIDs
 }
 
-func buildSearchQuery(params *rentalSearchParams) (string, []interface{}) {
+func buildSearchQuery(params *RentalSearchParams) (string, []interface{}) {
 	query := "select rentals.id, name, description, type, vehicle_make, vehicle_model, vehicle_year, vehicle_length,  sleeps, primary_image_url, price_per_day, home_city, home_state, home_zip, home_country, lat, lng, u.id, u.first_name, u.last_name from rentals, users u where u.id = user_id"
 	args := []interface{}{}
 
 	argCount := 0
 	//ids
-	if params.ids != "" {
+	if params.Ids != "" {
 		argCount += 1
 		query += fmt.Sprintf(" and rentals.id = ANY ($%d)", argCount)
-		args = append(args, pq.Array(getIntArrayFromString(params.ids)))
+		args = append(args, pq.Array(getIntArrayFromString(params.Ids)))
 	}
 
 	//price min
-	if params.price_min != 0 {
+	if params.PriceMin != 0 {
 		argCount += 1
 		query += fmt.Sprintf(" and price_per_day >= $%d", argCount)
-		args = append(args, params.price_min)
+		args = append(args, params.PriceMin)
 	}
 
 	//price max
-	if params.price_max != 0 {
+	if params.PriceMax != 0 {
 		argCount += 1
 		query += fmt.Sprintf(" and price_per_day <= $%d", argCount)
-		args = append(args, params.price_max)
+		args = append(args, params.PriceMax)
 	}
 
 	//near
-	if params.near != "" {
-		point := getFloatArrayFromString(params.near)
+	if params.Near != "" {
+		point := getFloatArrayFromString(params.Near)
 		lat := point[0]
 		lng := point[1]
 		query += fmt.Sprintf(" and ( 3959 * acos( cos( radians(%f) ) * cos( radians( lat ) ) * cos( radians( lng ) - radians(%f) ) + sin( radians(%f) ) * sin( radians( lat ) ) ) ) <= 100", lat, lng, lat)
 	}
 
 	//sort
-	if params.sort != "" {
-		query += fmt.Sprintf(" order by %s %s", params.sort, params.order)
+	if params.Sort != "" {
+		query += fmt.Sprintf(" order by %s %s", params.Sort, params.Order)
 	}
 
 	//pagination
-	query += fmt.Sprintf(" OFFSET %d", params.offset)
+	query += fmt.Sprintf(" OFFSET %d", params.Offset)
 
-	if params.limit > 0 {
-		query += fmt.Sprintf(" LIMIT %d", params.limit)
+	if params.Limit > 0 {
+		query += fmt.Sprintf(" LIMIT %d", params.Limit)
 	}
 
 	return query, args

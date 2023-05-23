@@ -37,7 +37,7 @@ func TestRepository(t *testing.T) {
 		rentalRepo := setup(t)
 		defer tearDown(rentalRepo)
 
-		params := rentalSearchParams{ids: "1,2"}
+		params := RentalSearchParams{Ids: "1,2"}
 		rentals, err := rentalRepo.searchRentals(&params)
 
 		if err != nil {
@@ -53,7 +53,7 @@ func TestRepository(t *testing.T) {
 		rentalRepo := setup(t)
 		defer tearDown(rentalRepo)
 
-		params := rentalSearchParams{price_min: 20000}
+		params := RentalSearchParams{PriceMin: 20000}
 		rentals, err := rentalRepo.searchRentals(&params)
 
 		if err != nil {
@@ -69,7 +69,7 @@ func TestRepository(t *testing.T) {
 		rentalRepo := setup(t)
 		defer tearDown(rentalRepo)
 
-		params := rentalSearchParams{price_max: 10000}
+		params := RentalSearchParams{PriceMax: 10000}
 		rentals, err := rentalRepo.searchRentals(&params)
 
 		if err != nil {
@@ -85,7 +85,7 @@ func TestRepository(t *testing.T) {
 		rentalRepo := setup(t)
 		defer tearDown(rentalRepo)
 
-		params := rentalSearchParams{price_min: 10000, price_max: 15000}
+		params := RentalSearchParams{PriceMin: 10000, PriceMax: 15000}
 		rentals, err := rentalRepo.searchRentals(&params)
 
 		if err != nil {
@@ -101,7 +101,7 @@ func TestRepository(t *testing.T) {
 		rentalRepo := setup(t)
 		defer tearDown(rentalRepo)
 
-		params := rentalSearchParams{sort: "name"}
+		params := RentalSearchParams{Sort: "name"}
 		rentals, err := rentalRepo.searchRentals(&params)
 
 		if err != nil {
@@ -118,7 +118,7 @@ func TestRepository(t *testing.T) {
 		rentalRepo := setup(t)
 		defer tearDown(rentalRepo)
 
-		params := rentalSearchParams{sort: "name", order: "desc"}
+		params := RentalSearchParams{Sort: "name", Order: "desc"}
 		rentals, err := rentalRepo.searchRentals(&params)
 
 		if err != nil {
@@ -135,7 +135,7 @@ func TestRepository(t *testing.T) {
 		rentalRepo := setup(t)
 		defer tearDown(rentalRepo)
 
-		params := rentalSearchParams{near: "33.64,-117.93"}
+		params := RentalSearchParams{Near: "33.64,-117.93"}
 		rentals, err := rentalRepo.searchRentals(&params)
 
 		if err != nil {
@@ -152,7 +152,7 @@ func TestRepository(t *testing.T) {
 		rentalRepo := setup(t)
 		defer tearDown(rentalRepo)
 
-		params := rentalSearchParams{limit: 7}
+		params := RentalSearchParams{Limit: 7}
 		rentals, err := rentalRepo.searchRentals(&params)
 
 		if err != nil {
@@ -169,7 +169,7 @@ func TestRepository(t *testing.T) {
 		rentalRepo := setup(t)
 		defer tearDown(rentalRepo)
 
-		params := rentalSearchParams{order: "name", offset: 5}
+		params := RentalSearchParams{Order: "name", Offset: 5}
 		rentals, err := rentalRepo.searchRentals(&params)
 
 		if err != nil {

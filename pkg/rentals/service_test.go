@@ -36,4 +36,18 @@ func TestUserService(t *testing.T) {
 		}
 	})
 
+	t.Run("SearchRentals returns a rental", func(t *testing.T) {
+		rentalService := setupService(t)
+		defer teardownService(rentalService)
+		params := &RentalSearchParams{Ids: "2"}
+		rental, err := rentalService.SearchRentals(params)
+		if err != nil {
+			t.Fatalf("error finding rental: %s", err)
+		}
+		expectedName := "Maupin: Vanagon Camper"
+		if rental[0].Name != expectedName {
+			t.Fatalf("did not return a correct rental, expected: %s, got:%s", expectedName, rental[0].Name)
+		}
+	})
+
 }

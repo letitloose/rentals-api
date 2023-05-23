@@ -11,3 +11,7 @@ func NewRentalService(repository *rentalRepository) *RentalService {
 func (service *RentalService) GetRental(id int) (*Rental, error) {
 	return service.repository.getRental(id), nil
 }
+
+func (service *RentalService) SearchRentals(params *RentalSearchParams) ([]*Rental, error) {
+	return service.repository.searchRentals(params)
+}
