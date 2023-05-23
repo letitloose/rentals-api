@@ -32,4 +32,153 @@ func TestRepository(t *testing.T) {
 			t.Fatalf("failed to get the rental. expected:%s, got: %s", expectedName, rental.Name)
 		}
 	})
+
+	t.Run("searchRentals returns the correct rentals when using ID search.", func(t *testing.T) {
+		rentalRepo := setup(t)
+		defer tearDown(rentalRepo)
+
+		params := rentalSearchParams{ids: "1,2"}
+		rentals, err := rentalRepo.searchRentals(&params)
+
+		if err != nil {
+			t.Fatalf("error searching rentals by ids: %s", err)
+		}
+
+		if len(rentals) != 2 {
+			t.Fatalf("failed to get the proper rentals. expected:2, got: %d", len(rentals))
+		}
+	})
+
+	t.Run("searchRentals returns the correct rentals when using price_min search.", func(t *testing.T) {
+		rentalRepo := setup(t)
+		defer tearDown(rentalRepo)
+
+		params := rentalSearchParams{price_min: 20000}
+		rentals, err := rentalRepo.searchRentals(&params)
+
+		if err != nil {
+			t.Fatalf("error searching rentals by ids: %s", err)
+		}
+
+		if len(rentals) != 4 {
+			t.Fatalf("failed to get the proper rentals. expected:4, got: %d", len(rentals))
+		}
+	})
+
+	t.Run("searchRentals returns the correct rentals when using price_max search.", func(t *testing.T) {
+		rentalRepo := setup(t)
+		defer tearDown(rentalRepo)
+
+		params := rentalSearchParams{price_max: 10000}
+		rentals, err := rentalRepo.searchRentals(&params)
+
+		if err != nil {
+			t.Fatalf("error searching rentals by ids: %s", err)
+		}
+
+		if len(rentals) != 9 {
+			t.Fatalf("failed to get the proper rentals. expected:9, got: %d", len(rentals))
+		}
+	})
+
+	t.Run("searchRentals returns the correct rentals when using price_min and price_max search.", func(t *testing.T) {
+		rentalRepo := setup(t)
+		defer tearDown(rentalRepo)
+
+		params := rentalSearchParams{price_min: 10000, price_max: 15000}
+		rentals, err := rentalRepo.searchRentals(&params)
+
+		if err != nil {
+			t.Fatalf("error searching rentals by ids: %s", err)
+		}
+
+		if len(rentals) != 10 {
+			t.Fatalf("failed to get the proper rentals. expected:10, got: %d", len(rentals))
+		}
+	})
+
+	t.Run("searchRentals returns the correct order of rentals when using sort.", func(t *testing.T) {
+		rentalRepo := setup(t)
+		defer tearDown(rentalRepo)
+
+		params := rentalSearchParams{sort: "name"}
+		rentals, err := rentalRepo.searchRentals(&params)
+
+		if err != nil {
+			t.Fatalf("error searching rentals by ids: %s", err)
+		}
+
+		expected := "1984 Volkswagen Westfalia"
+		if rentals[0].Name != expected {
+			t.Fatalf("failed to get the proper rentals. expected:%s, got: %s", expected, rentals[0].Name)
+		}
+	})
+
+	t.Run("searchRentals returns the correct order of rentals when using sort is desc", func(t *testing.T) {
+		rentalRepo := setup(t)
+		defer tearDown(rentalRepo)
+
+		params := rentalSearchParams{sort: "name", order: "desc"}
+		rentals, err := rentalRepo.searchRentals(&params)
+
+		if err != nil {
+			t.Fatalf("error searching rentals by ids: %s", err)
+		}
+
+		expected := "TiKi Van  Extended custom camper"
+		if rentals[0].Name != expected {
+			t.Fatalf("failed to get the proper rentals. expected:%s, got: %s", expected, rentals[0].Name)
+		}
+	})
+
+	t.Run("searchRentals returns the correct rentals when using near", func(t *testing.T) {
+		rentalRepo := setup(t)
+		defer tearDown(rentalRepo)
+
+		params := rentalSearchParams{near: "33.64,-117.93"}
+		rentals, err := rentalRepo.searchRentals(&params)
+
+		if err != nil {
+			t.Fatalf("error searching rentals by ids: %s", err)
+		}
+
+		expected := 6
+		if len(rentals) != expected {
+			t.Fatalf("failed to get the proper rentals. expected:%d, got: %d", expected, len(rentals))
+		}
+	})
+
+	t.Run("searchRentals returns the correct number when limited", func(t *testing.T) {
+		rentalRepo := setup(t)
+		defer tearDown(rentalRepo)
+
+		params := rentalSearchParams{limit: 7}
+		rentals, err := rentalRepo.searchRentals(&params)
+
+		if err != nil {
+			t.Fatalf("error searching rentals by ids: %s", err)
+		}
+
+		expected := 7
+		if len(rentals) != expected {
+			t.Fatalf("failed to get the proper rentals. expected:%d, got: %d", expected, len(rentals))
+		}
+	})
+
+	t.Run("searchRentals returns the correct rental when offset", func(t *testing.T) {
+		rentalRepo := setup(t)
+		defer tearDown(rentalRepo)
+
+		params := rentalSearchParams{order: "name", offset: 5}
+		rentals, err := rentalRepo.searchRentals(&params)
+
+		if err != nil {
+			t.Fatalf("error searching rentals by ids: %s", err)
+		}
+
+		expected := "'Abaco' VW Bay Window: Westfalia Pop-top"
+		if rentals[0].Name != expected {
+			t.Fatalf("failed to get the proper rentals. expected:%s, got: %s", expected, rentals[0].Name)
+		}
+	})
 }
