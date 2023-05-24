@@ -44,7 +44,7 @@ func TestHandlers(t *testing.T) {
 				status, http.StatusOK)
 		}
 
-		expected := `{"id":1,"name":"'Abaco' VW Bay Window: Westfalia Pop-top","description":"ultrices consectetur torquent posuere phasellus urna faucibus convallis fusce sem felis malesuada luctus diam hendrerit fermentum ante nisl potenti nam laoreet netus est erat mi","type":"camper-van","make":"Volkswagen","model":"Bay Window","year":"1978","length":15,"sleeps":"4","Primary_image_url":"https://res.cloudinary.com/outdoorsy/image/upload/v1528586451/p/rentals/4447/images/yd7txtw4hnkjvklg8edg.jpg","price":{"day":16900},"location":{"city":"Costa Mesa","state":"CA","zip":"92627","country":"US","lat":33.64,"lng":-117.93},"user":{"id":1,"first_name":0,"last_name":0}}`
+		expected := `{"id":1,"name":"'Abaco' VW Bay Window: Westfalia Pop-top","description":"ultrices consectetur torquent posuere phasellus urna faucibus convallis fusce sem felis malesuada luctus diam hendrerit fermentum ante nisl potenti nam laoreet netus est erat mi","type":"camper-van","make":"Volkswagen","model":"Bay Window","year":"1978","length":15,"sleeps":"4","Primary_image_url":"https://res.cloudinary.com/outdoorsy/image/upload/v1528586451/p/rentals/4447/images/yd7txtw4hnkjvklg8edg.jpg","price":{"day":16900},"location":{"city":"Costa Mesa","state":"CA","zip":"92627","country":"US","lat":33.64,"lng":-117.93},"user":{"id":1,"first_name":"John","last_name":"Smith"}}`
 		if recorder.Body.String() != expected {
 			t.Errorf("handler returned unexpected body. expected: %v \ngot: %v",
 				expected, recorder.Body.String())
@@ -124,7 +124,7 @@ func TestHandlers(t *testing.T) {
 				status, http.StatusOK)
 		}
 
-		expected := `[{"id":10,"name":"Betty!    1987 Volkswagen Westfalia Poptop Manual with kitchen!","description":"mollis curabitur cum convallis sagittis feugiat lectus ligula porta libero parturient maecenas cum facilisis ridiculus mauris ut est scelerisque tincidunt quisque hac lectus mus dapibus","type":"camper-van","make":"Volkswagen","model":"Westfalia","year":"1987","length":15,"sleeps":"4","Primary_image_url":"https://res.cloudinary.com/outdoorsy/image/upload/v1535836865/p/rentals/91133/images/blijuwlisflua72ay1p2.jpg","price":{"day":25000},"location":{"city":"Missoula ","state":"MT","zip":"59808","country":"US","lat":46.92,"lng":-114.09},"user":{"id":5,"first_name":0,"last_name":0}}]`
+		expected := `[{"id":10,"name":"Betty!    1987 Volkswagen Westfalia Poptop Manual with kitchen!","description":"mollis curabitur cum convallis sagittis feugiat lectus ligula porta libero parturient maecenas cum facilisis ridiculus mauris ut est scelerisque tincidunt quisque hac lectus mus dapibus","type":"camper-van","make":"Volkswagen","model":"Westfalia","year":"1987","length":15,"sleeps":"4","Primary_image_url":"https://res.cloudinary.com/outdoorsy/image/upload/v1535836865/p/rentals/91133/images/blijuwlisflua72ay1p2.jpg","price":{"day":25000},"location":{"city":"Missoula ","state":"MT","zip":"59808","country":"US","lat":46.92,"lng":-114.09},"user":{"id":5,"first_name":"Ben","last_name":"Reynard"}}]`
 		if recorder.Body.String() != expected {
 			t.Errorf("handler returned unexpected body. expected: %v \ngot: %v",
 				expected, recorder.Body.String())
