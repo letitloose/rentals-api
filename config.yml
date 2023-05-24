@@ -1,0 +1,7 @@
+db:
+  type: postgres
+  username: root
+  password: root
+  host: 172.18.0.2
+  port: 5432
+  database: testingwithrentals
