@@ -1,3 +1,25 @@
+# Running the Application
+
+Hello, thank you for taking the time to review my coding challenge homework.  to run the project you need to have docker, docker-compose and golang installed on your system.  First you will need to initialize the database, which is a dockerized postgres DB.  Once you clone this repository, navigate to the base directory and run the command:
+
+```docker-compose up```
+
+This will utilize the docker-compose yml and the sql-init.sql to set up a test database with some users and some rentals.
+
+Next you will want to run the unit tests, which can be achieved by running `go test ./...` from the root directory of the project.
+
+Finally, you can either: 
+
+Run the application using the command `go run cmd/web/main.go` 
+OR 
+Build the application using go `build cmd/web/main.go` then run it using the executable called `main` that will be built.
+
+Either way, the application will now be running and listening to port 8080.  You can navigate to the rentals endpoint described below at `http://localhost:8080/rentals` in any browser or using postman.
+
+Happy Testing!
+
+this will 
+
 # Coding Challenge
 
 Thanks for applying for a backend role at Outdoorsy. We've put together this code challenge, which should take around 3-4 hours to complete.
