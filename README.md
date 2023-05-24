@@ -18,8 +18,6 @@ Either way, the application will now be running and listening to port 8080.  You
 
 Happy Testing!
 
-this will 
-
 # Coding Challenge
 
 Thanks for applying for a backend role at Outdoorsy. We've put together this code challenge, which should take around 3-4 hours to complete.
